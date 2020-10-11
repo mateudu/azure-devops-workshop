@@ -37,6 +37,26 @@ Now, two Teams and Area Paths should be created. It's time to configure Groups.
 
 ### Create & Configure GIT Repository (policies, security, merge types)
 
+#### New Repository
+
+1. Go to `https://dev.azure.com/{YOUR_ORGANIZATION_NAME}/_git/{YOUR_PROEJCT_NAME}` and create a new repository, called `Service 01`.
+![Description](/images/BrEfgeDnt2.png)
+![Description](/images/Ipn3tzJ8vU.png)
+
+#### Branch Policies
+1. Select the `Service 01` repository and go to `Branches` tab. Open the `Branch Policies` of `main` branch.
+![Description](/images/KHeeKx3BT3.png)
+![Description](/images/mIxklbpUNG.png)
+1. Enable policies, with following settings:
+  1. **Require a minimum number of reviewers**: *Minimum number of reviewers*=1, *Allow requestors to approve their own changes*=True
+  1. **Check for linked work items**: Required
+  1. **Check for comment resolution**: Required
+  1. **Limit merge types**: *Squash merge* ony
+1. Add `Service 01` as `Automatically included reviewers`. Make sure to set `Minimum number of reviewers` to **1** and leave the `Allow requestors to approve their own changes` checkbox checked.
+![Description](/images/Y2ne7f5Gsb.png)
+
+#### Pull Request bypass permission
+
 ### Setup Build Pipelines (YAML-based):
 
 #### .NET Core App Build with Unit Tests validation
@@ -49,7 +69,15 @@ Now, two Teams and Area Paths should be created. It's time to configure Groups.
 
 ### Create & Configure Release Pipeline (IaC, Code deployment)
 
+#### Service connection setup
+
+#### New Release pipeline
+
 ### Variable Groups configuration (standard/Key Vault-based)
+
+#### New Variable Group
+
+#### Linking Variable Group to Release pipeline
 
 ### Tracking deployment status in Work Items
 
