@@ -10,6 +10,10 @@
 
 ### Create & Configure new Azure DevOps Project
 
+1. Go to `https://dev.azure.com/YOUR_ORGANIZATION_NAME/` and click `+ NEW PROJECT` button.
+
+
+
 ### Create & Configure Project Team and Groups
 
 ### Create & Configure GIT Repository (policies, security, merge types)
