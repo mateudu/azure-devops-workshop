@@ -1,5 +1,11 @@
 # Azure DevOps Workshop
 
+## Prerequisites
+* Office 365 Access (with MS Teams Admin)
+* Azure DevOps Admin access
+* Azure Subscription
+* Installed software: Git, Visual Studio Code, Powershell Module 'Az'
+
 ## Day 1
 
 ### Create & Configure new Azure DevOps Project
