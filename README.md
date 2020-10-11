@@ -48,10 +48,11 @@ Now, two Teams and Area Paths should be created. It's time to configure Groups.
 ![Description](/images/KHeeKx3BT3.png)
 ![Description](/images/mIxklbpUNG.png)
 1. Enable policies, with following settings:
-  1. **Require a minimum number of reviewers**: *Minimum number of reviewers*=1, *Allow requestors to approve their own changes*=True
-  1. **Check for linked work items**: Required
-  1. **Check for comment resolution**: Required
-  1. **Limit merge types**: *Squash merge* ony
+    1. **Require a minimum number of reviewers**: *Minimum number of reviewers*=1, *Allow requestors to approve their own changes*=True
+    1. **Check for linked work items**: Required
+    1. **Check for comment resolution**: Required
+    1. **Limit merge types**: *Squash merge* ony
+![Description](/images/J3477CgEGX.png)
 1. Add `Service 01` as `Automatically included reviewers`. Make sure to set `Minimum number of reviewers` to **1** and leave the `Allow requestors to approve their own changes` checkbox checked.
 ![Description](/images/Y2ne7f5Gsb.png)
 
