@@ -23,8 +23,17 @@ Large projects may require more than one team. One of helpful Azure DevOps featu
 
 1. Go to `https://dev.azure.com/{YOUR_ORGANIZATION_NAME}/{YOUR_PROEJCT_NAME}/_settings/teams` and click `New Team` button.
 ![Create new project team](/images/mY7DYaBSvv.png)
-1. Enter the new Team name and click `Create`. Make sure to leave `Create an area path with the name of the team` option checked.
+1. Enter the new Team name (`Service 01`) and click `Create`. Make sure to leave `Create an area path with the name of the team` option checked.
 ![Create new project team](/images/kQVX09idzc.png)
+1. Repeat the previous step and create one more Team (`Service 02`).
+
+Now, two Teams and Area Paths should be created. It's time to configure Groups.
+
+1. Go to `https://dev.azure.com/{YOUR_ORGANIZATION_NAME}/{YOUR_PROEJCT_NAME}/_settings/permissions` and click `New Group` button.
+![Create new group](/images/Nv5uosz9OQ.png)
+1. Enter the Group name (`Test Approvers`), add your account to `Members` and create it.
+![Create new group](/images/7exd9Q9you.png)
+1. Repeat the previous step and create a group with `Prod Approvers` name.
 
 ### Create & Configure GIT Repository (policies, security, merge types)
 
