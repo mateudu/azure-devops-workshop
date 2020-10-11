@@ -11,8 +11,11 @@
 ### Create & Configure new Azure DevOps Project
 
 1. Go to `https://dev.azure.com/YOUR_ORGANIZATION_NAME/` and click `+ NEW PROJECT` button.
-
-
+![Create new project in Azure DevOps](/images/6ymNTmtEKt.png)
+1. Enter the project name and click `Create`.
+![Create new project in Azure DevOps](/images/dtBc4o7F0j.png)
+1. The new project should be created now.
+![Create new project in Azure DevOps](/images/chrome_cAriUhCSHD.png)
 
 ### Create & Configure Project Team and Groups
 
