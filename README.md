@@ -44,7 +44,7 @@ Now, two Teams and Area Paths should be created. It's time to configure Groups.
 ![Description](/images/Ipn3tzJ8vU.png)
 
 #### Branch Policies
-1. Select the `Service 01` repository and go to `Branches` tab. Open the `Branch Policies` of `main` branch.
+1. Select the `Service 01` repository and go to `Branches` tab. Open the `Branch Policies` of `master` branch.
 ![Description](/images/KHeeKx3BT3.png)
 ![Description](/images/mIxklbpUNG.png)
 1. Enable policies, with following settings:
@@ -57,6 +57,10 @@ Now, two Teams and Area Paths should be created. It's time to configure Groups.
 ![Description](/images/Y2ne7f5Gsb.png)
 
 #### Pull Request bypass permission
+1. Select the `Service 01` repository and go to `Branches` tab. Open the `Branch Security` of `master` branch.
+![Description](/images/1IRZHCGFvQ.png)
+1. Select `Project Administrators` and `Allow` option in `Bypass policies when completing pull requests` setting.
+![Description](/images/qYfJ8kV9XJ.png)
 
 ### Setup Build Pipelines (YAML-based):
 
