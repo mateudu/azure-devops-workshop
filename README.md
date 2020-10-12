@@ -74,6 +74,8 @@ Now, two Teams and Area Paths should be created. It's time to configure Groups.
 1. Make a new pull request to `master` branch, and bypass policies to complete it.
 1. Go to `Pipelines` tab and add new build. As a definition source, select `ci/ci.yml` file.
 1. Edit the build pipeline, to select correct Azure DevOps Feed ID.
+1. Run the build.
+![Description](/images/J3477CgEGX.png)
 1. Go to `master` branch policies, as in previous steps and enable Build validation for pull requests.
 
 #### .NET Core App Build with Unit Tests validation
