@@ -26,6 +26,7 @@ jobs:
         command: 'restore'
         projects: 'src/MyWebApp.sln'
         feedsToUse: 'select'
+        verbosityRestore: 'Minimal'
 
     - task: DotNetCoreCLI@2
       displayName: 'Perform Unit Tests'
@@ -57,3 +58,72 @@ jobs:
         PathtoPublish: 'iac'
         ArtifactName: 'iac'
         publishLocation: 'Container'
+
+  - job: Verify_Database_migrations
+    displayName: "Verify Database migrations"
+    condition: always()
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+    
+    - task: Bash@3
+      displayName: "Run MSSQL locally"
+      inputs:
+        targetType: 'inline'
+        script: |
+          export MSSQL_NAME='mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04'
+          
+          docker pull ${MSSQL_NAME}
+          docker run -p 1433:1433 -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Pass@w0rd123" -d ${MSSQL_NAME}
+
+    - task: DotNetCoreCLI@2
+      displayName: "Publish Migrator App"
+      inputs:
+        command: 'publish'
+        publishWebProjects: false
+        projects: 'src/MyWebApp.Database/MyWebApp.Database.csproj'
+        arguments: '-c $(BuildConfiguration) -o $(Build.ArtifactStagingDirectory)/app/publish -v m'
+        zipAfterPublish: false
+        modifyOutputPath: false
+
+    - task: Bash@3
+      displayName: "Execute Entity Framework migrations"
+      inputs:
+        targetType: 'inline'
+        script: |
+          export DatabaseConnectionString='Server=localhost;User Id=sa;Password=Pass@w0rd123;'
+          dotnet MyWebApp.Database.dll
+        workingDirectory: '$(Build.ArtifactStagingDirectory)/app/publish'
+        failOnStderr: true
+
+  - job: Publish_NuGet
+    displayName: "Publish NuGet"
+    pool:
+      vmImage: 'windows-2019'
+
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore NuGet packages'
+      inputs:
+        command: 'restore'
+        projects: 'src/MyWebApp.sln'
+        feedsToUse: 'select'
+        verbosityRestore: 'Minimal'
+    
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'src/MyWebApp.Common/MyWebApp.Common.csproj'
+        includesymbols: true
+        includesource: true
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'BUILD_BUILDNUMBER'
+        verbosityPack: 'Minimal'
+        
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'push'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+        nuGetFeedType: 'internal'
+        publishVstsFeed: '76ead6b6-34d4-4e61-a71d-d284db0064d0/12ee1219-d49e-4eba-9481-426a07901b8d'
