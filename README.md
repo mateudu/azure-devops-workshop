@@ -64,11 +64,29 @@ Now, two Teams and Area Paths should be created. It's time to configure Groups.
 
 ### Setup Build Pipelines (YAML-based):
 
+1. Go to `Artifacts` tab in Azure DevOps and create a new feed.
+1. Go to my GitHub repository (the one that you read ;)) and clone the repository.
+1. Clone the `Service 01` repository from Azure DevOps.
+1. Copy the following directories from my GitHub repository, and add them to `Service 01` repository, by making a new branch locally, copying these directories and pushing that branch to `Service 01` repository:
+    1. `ci`
+    1. `iac`
+    1. `src`
+1. Make a new pull request to `master` branch, and bypass policies to complete it.
+1. Go to `Pipelines` tab and add new build. As a definition source, select `ci/ci.yml` file.
+1. Edit the build pipeline, to select correct Azure DevOps Feed ID.
+1. Go to `master` branch policies, as in previous steps and enable Build validation for pull requests.
+
 #### .NET Core App Build with Unit Tests validation
+
+There is a `MyWebApp.Web` project, that contains ASP.NET Core 3.1 web application. This project is tested by `MyWebApp.Tests` project.
 
 #### Entity Framework database migrations with validation using Docker-based MS SQL
 
+There is a `MyWebApp.Dabatase` project, that contains Entity Framework Core-based SQL migrations. These migrations are verified by `Verify Database migrations` job in the build pipeline.
+
 #### NuGet packages hosted as Azure Artifacts
+
+There is a `MyWebApp.Common` project, that is a .NET Core 3.1 Class library. This library is published as a NuGet package in NuGet Feed, created in this section.
 
 ## Day 2
 
