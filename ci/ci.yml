@@ -1,0 +1,59 @@
+trigger:
+  paths:
+    include:
+      - src/*
+      - ci/*
+      - iac/*
+  branches:
+    include:
+      - master
+
+variables:
+  system.debug: 'true'
+  BuildPlatform: 'any cpu'
+  BuildConfiguration: 'release'
+
+jobs:
+  - job: Build_Solution
+    displayName: "Build Solution"
+    pool:
+      vmImage: 'windows-2019'
+
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore NuGet packages'
+      inputs:
+        command: 'restore'
+        projects: 'src/MyWebApp.sln'
+        feedsToUse: 'select'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Perform Unit Tests'
+      inputs:
+        command: test
+        projects: 'src/MyWebApp.Tests/MyWebApp.Tests.csproj'
+        arguments: '--no-restore'
+    
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish App'
+      inputs:
+        command: 'publish'
+        publishWebProjects: false
+        projects: 'src/MyWebApp.Web/MyWebApp.Web.csproj'
+        arguments: '-c Release -o $(Build.ArtifactStagingDirectory)\app --no-restore -v m'
+        zipAfterPublish: false
+        modifyOutputPath: false
+
+    - task: PublishBuildArtifacts@1
+      displayName: "Publish App Artifact"
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\app'
+        ArtifactName: 'app'
+        publishLocation: 'Container'
+
+    - task: PublishBuildArtifacts@1
+      displayName: "Publish IaC Artifact"
+      inputs:
+        PathtoPublish: 'iac'
+        ArtifactName: 'iac'
+        publishLocation: 'Container'
