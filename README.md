@@ -103,6 +103,7 @@ There is a `MyWebApp.Common` project, that is a .NET Core 3.1 Class library. Thi
 1. Generate Application secret and copy it (save it for later).
 ![Description](/images/9oDzQ3jr5k.png)
 1. Go to Azure Portal and create a new Resource Group. Copy the Resource Group name, Subscription ID and Tenant ID.
+1. Create a new Key Vault, and assign Secret->Get/List policy to created Application.
 1. Assign `Contributor` role to created SPN on created Resource Group level.
 1. Go to Azure DevOps Service Connections tab. Link: `https://dev.azure.com/{YOUR_ORGANIZATION_NAME}/{YOUR_PROEJCT_NAME}/_settings/adminservices`.
 1. Set up a new Service Connection.
@@ -122,14 +123,14 @@ There is a `MyWebApp.Common` project, that is a .NET Core 3.1 Class library. Thi
         1. **Grant access permission to all pipelines**: selected
         ![Description](/images/chrome_jIDflTmJ6q.png)
 
+### Variable Groups configuration (standard/Key Vault-based)
+
+### Release Pipeline configuration
+
 #### New Release pipeline
 
 1. Go to Releases. Link: 
 ![Description](/images/KzyJpeu2Bs.png)
-
-### Variable Groups configuration (standard/Key Vault-based)
-
-#### New Variable Group
 
 #### Linking Variable Group to Release pipeline
 
