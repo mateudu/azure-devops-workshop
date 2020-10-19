@@ -102,8 +102,8 @@ There is a `MyWebApp.Common` project, that is a .NET Core 3.1 Class library. Thi
 ![Description](/images/84gzYAwtqb.png)
 1. Generate Application secret and copy it (save it for later).
 ![Description](/images/9oDzQ3jr5k.png)
-1. Go to Azure Portal and create a new Resource Group. Copy the Resource Group name, Subscription ID and Tenant ID.
-1. Create a new Key Vault, and assign Secret->Get/List policy to created Application.
+1. Go to Azure Portal and create a new Resource Group. Copy the Resource Group name, Subscription ID, Subscription Name and Tenant ID.
+1. Create a new Key Vault, and assign Secret->Get/List policy to created Application. Add new secret called `my-secret` with a random text vaule.
 1. Assign `Contributor` role to created SPN on created Resource Group level.
 1. Go to Azure DevOps Service Connections tab. Link: `https://dev.azure.com/{YOUR_ORGANIZATION_NAME}/{YOUR_PROEJCT_NAME}/_settings/adminservices`.
 1. Set up a new Service Connection.
@@ -115,15 +115,33 @@ There is a `MyWebApp.Common` project, that is a .NET Core 3.1 Class library. Thi
         1. **Environment**: `Azure Cloud`
         1. **Scope Level**: `Subscription`
         1. **Subscription Id**: Paste Subscription ID from previous step
-        1. **Subscription Name**: whatever
+        1. **Subscription Name**: Paste Subscription name
         1. **Service Principal Id**: Paste Application ID
         1. **Service principal key**: Paste Application secret
         1. **Tenant ID**: Paste Tenant ID
-        1. **Service connection name**: whatever
+        1. **Service connection name**: enter `Automation SPN`
         1. **Grant access permission to all pipelines**: selected
         ![Description](/images/chrome_jIDflTmJ6q.png)
 
 ### Variable Groups configuration (standard/Key Vault-based)
+
+#### Standard Variable Group
+
+1. Go to Variable Groups tab. Link: `https://dev.azure.com/{YOUR_ORGANIZATION_NAME}/{YOUR_PROEJCT_NAME}/_library?itemType=VariableGroups`
+1. Add new Variable Group, called `MyApp - DEV`. Add there following variables:
+    1. `webApp.Name`: web application name, must be unique in Azure!
+    1. `hostingPlan.Name`: the name of the App Service Plan
+    1. `resourceGroup.Name`: the name of created resource group
+    1. `resourceGroup.Location`: enter location name, e.g. `westeurope`
+    1. `serviceConection`: enter `Automation SPN`
+1. Save changes.
+
+#### Key Vault-based Variable Group
+
+1. Go to Variable Groups tab. Link: `https://dev.azure.com/{YOUR_ORGANIZATION_NAME}/{YOUR_PROEJCT_NAME}/_library?itemType=VariableGroups`
+1. Add new Variable Group, called `MyApp - KV - DEV`. Enable `Link secrets from an Azure key vault as variables` option. Select a Key Vault, that was created in previous part of the workshop.
+1. Add `my-secret` variable.
+1. Save changes.
 
 ### Release Pipeline configuration
 
@@ -131,6 +149,23 @@ There is a `MyWebApp.Common` project, that is a .NET Core 3.1 Class library. Thi
 
 1. Go to Releases. Link: 
 ![Description](/images/KzyJpeu2Bs.png)
+1. Create new release pipeline. Start witn an `Empty job`. Rename it to `MyApp`.
+1. Rename the stage name to `DEV`.
+1. Add artifact, from `Build` -> `Service 01`. Change selection from `Latest` default version to `Latest from a specific branch with tags` with `master` branch selected..
+1. Save changes.
+1. Go to 'DEV' stage.
+1. Link Variable Groups to 'DEV' stage.
+1. Add `ARM template deployment` step with following settings:
+    1. Subscription: `$(serviceConection)`
+    1. Resource Group: `$(resourceGroup.Name)`
+    1. Location: `$(resourceGroup.Location)`
+    1. Template: `$(System.DefaultWorkingDirectory)/_Service 01/iac/iac.json`
+    1. Override template parameters: `-appName $(webApp.Name) -hostingPlanName $(hostingPlan.Name) -location $(resourceGroup.Location)`
+1. Add `Azure App Service Deploy` step with following settings:
+    1. Azure subscription: `$(serviceConection)`
+    1. App Service name: `$(webApp.Name)`
+    1. Package or folder: `$(System.DefaultWorkingDirectory)/_Service 01/app`
+    1. Application and Configuration Settings -> App settings: `-sample.setting "$(my-secret)"`
 
 #### Linking Variable Group to Release pipeline
 
