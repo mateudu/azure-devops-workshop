@@ -96,6 +96,16 @@ There is a `MyWebApp.Common` project, that is a .NET Core 3.1 Class library. Thi
 
 #### Service connection setup
 
+1. Go to [App Registrations](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps) in Azure Active Directory.
+![Description](/images/zWTuEjSIjY.png)
+1. Add new App.
+![Description](/images/84gzYAwtqb.png)
+1. Generate Application secret and copy it (save it for later).
+![Description](/images/9oDzQ3jr5k.png)
+1. Go to Azure DevOps Service Connections tab. Link: `https://dev.azure.com/{YOUR_ORGANIZATION_NAME}/{YOUR_PROEJCT_NAME}/_settings/adminservices`.
+1. Set up a new Service Connection.
+![Description](/images/0PhChfiXJU.png)
+
 #### New Release pipeline
 
 ### Variable Groups configuration (standard/Key Vault-based)
