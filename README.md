@@ -156,6 +156,7 @@ There is a `MyWebApp.Common` project, that is a .NET Core 3.1 Class library. Thi
 1. Go to 'DEV' stage.
 1. Link Variable Groups to 'DEV' stage.
 1. Add `ARM template deployment` step with following settings:
+    1. Task version: `2.*`
     1. Subscription: `$(serviceConection)`
     1. Resource Group: `$(resourceGroup.Name)`
     1. Location: `$(resourceGroup.Location)`
