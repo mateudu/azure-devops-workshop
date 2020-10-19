@@ -145,8 +145,6 @@ There is a `MyWebApp.Common` project, that is a .NET Core 3.1 Class library. Thi
 
 ### Release Pipeline configuration
 
-#### New Release pipeline
-
 1. Go to Releases. Link: 
 ![Description](/images/KzyJpeu2Bs.png)
 1. Create new release pipeline. Start witn an `Empty job`. Rename it to `MyApp`.
@@ -168,9 +166,10 @@ There is a `MyWebApp.Common` project, that is a .NET Core 3.1 Class library. Thi
     1. Package or folder: `$(System.DefaultWorkingDirectory)/_Service 01/app`
     1. Application and Configuration Settings -> App settings: `-sample.setting "$(my-secret)"`
 
-#### Linking Variable Group to Release pipeline
-
 ### Tracking deployment status in Work Items
+
+1. Open created Release pipeline and click `Edit`.
+1. Go to `Options` -> `Integrations`. Enable `Report deployment status to Boards` and map `DEV` stage to `Development`.
 
 ### MS Teams notifications
 
