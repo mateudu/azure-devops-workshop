@@ -98,13 +98,29 @@ There is a `MyWebApp.Common` project, that is a .NET Core 3.1 Class library. Thi
 
 1. Go to [App Registrations](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps) in Azure Active Directory.
 ![Description](/images/zWTuEjSIjY.png)
-1. Add new App.
+1. Add new App. Copy Application ID.
 ![Description](/images/84gzYAwtqb.png)
 1. Generate Application secret and copy it (save it for later).
 ![Description](/images/9oDzQ3jr5k.png)
+1. Go to Azure Portal and create a new Resource Group. Copy the Resource Group name, Subscription ID and Tenant ID.
+1. Assign `Contributor` role to created SPN on created Resource Group level.
 1. Go to Azure DevOps Service Connections tab. Link: `https://dev.azure.com/{YOUR_ORGANIZATION_NAME}/{YOUR_PROEJCT_NAME}/_settings/adminservices`.
 1. Set up a new Service Connection.
-![Description](/images/0PhChfiXJU.png)
+    1. Select `Azure Resource Manager`
+    ![Description](/images/0PhChfiXJU.png)
+    1. Select `Service principal (manual)`
+    ![Description](/images/0PhChfiXJU.png)
+    1. Enter following details:
+        1. **Environment**: `Azure Cloud`
+        1. **Scope Level**: `Subscription`
+        1. **Subscription Id**: Paste Subscription ID from previous step
+        1. **Subscription Name**: whatever
+        1. **Service Principal Id**: Paste Application ID
+        1. **Service principal key**: Paste Application secret
+        1. **Tenant ID**: Paste Tenant ID
+        1. **Service connection name**: whatever
+        1. **Grant access permission to all pipelines**: selected
+        ![Description](/images/chrome_jIDflTmJ6q.png)
 
 #### New Release pipeline
 
