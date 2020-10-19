@@ -124,6 +124,9 @@ There is a `MyWebApp.Common` project, that is a .NET Core 3.1 Class library. Thi
 
 #### New Release pipeline
 
+1. Go to Releases. Link: 
+![Description](/images/KzyJpeu2Bs.png)
+
 ### Variable Groups configuration (standard/Key Vault-based)
 
 #### New Variable Group
